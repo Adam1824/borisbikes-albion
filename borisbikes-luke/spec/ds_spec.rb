@@ -40,4 +40,12 @@ it 'returns twenty when not given capacity argument' do
   expect(docking_station.capacity).to eq(20)
 end
 
+it 'returns broken' do
+  docking_station = DockingStation.new
+  broken_bike = Bike.new('broken')
+  docking_station.dock_bike(broken_bike)
+  expect{ raise docking_station.release_bike}.to raise_error
+
+end
+
 end

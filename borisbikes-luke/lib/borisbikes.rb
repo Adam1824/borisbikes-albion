@@ -9,7 +9,7 @@ class DockingStation
   end
 
   def release_bike
-    if !(bikes.empty?)
+    if !(bikes.empty?) || status == 'working'
       bikes.slice(0)
       bikes.delete_at(0)
     else
