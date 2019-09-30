@@ -29,10 +29,13 @@ it 'does not release bikes when none are available' do
 end
 
 it 'does not dock bikes when no spaces are available' do
-  docking_station = DockingStation.new(5)
-  bike = Bike.new
-  docking_station.capacity.times {docking_station.dock_bike(Bike.new)}
-  expect { raise docking_station.dock_bike(bike)}.to raise_error
+  # docking_station = DockingStation.new(5)
+  # bike = Bike.new
+  # docking_station.capacity.times {docking_station.dock_bike(Bike.new)}
+  # expect { raise docking_station.dock_bike(bike)}.to raise_error
+  bike = double(:bike, broken: 'working')
+  subject.capacity.times { subject.dock_bike(bike)}
+  expect { subject.dock_bike(bike) }.to raise_error
 end
 
 it 'returns twenty when not given capacity argument' do
