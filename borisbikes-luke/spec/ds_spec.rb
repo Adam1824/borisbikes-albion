@@ -52,3 +52,39 @@ it 'returns broken' do
 end
 
 end
+
+describe Van do
+
+  it 'can get broken bike' do
+    bike = double(:bike, broken: 'broken')
+    expect(subject).to respond_to(:get_bikes_from_dock)
+  end
+
+  it 'can dock a bike' do
+    docking_station = DockingStation.new
+    subject.storage_v = ['1','2','3']
+    subject.dock_bikes_from_van(docking_station)
+    expect(docking_station.bikes).to eq(subject.storage_v)
+
+  end
+
+  it 'can get the fixed bikes from the garage' do
+    garage = double(storage_g: ['1','2','3'])
+    expect(subject.get_bikes_from_garage(garage.storage_g)).to eq(garage.storage_g)
+  end
+end
+
+describe Garage do
+
+  it 'can fix bikes' do
+    bike = Bike.new('broken')
+    docking_station = DockingStation.new
+    docking_station.dock_bike(bike)
+    van = Van.new
+    van.get_bikes_from_dock(docking_station)
+    subject.fix(van.storage_v)
+    expect(subject.storage_g).to include(bike)
+    expect(bike.status).to eq('working')
+  end
+
+end

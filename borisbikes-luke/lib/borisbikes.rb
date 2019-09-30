@@ -56,6 +56,46 @@ class Bike
   end
 end
 
+class Van
+  attr_accessor :storage_v
+  def initialize
+    @storage_v = []
+  end
+
+  def get_bikes_from_dock(docking_station)
+    docking_station.bikes.each do |bike|
+      if bike.status == 'broken'
+        storage_v << bike
+      end
+    end
+  end
+
+  def get_bikes_from_garage(storage_g)
+    storage_v = storage_g
+  end
+
+  def dock_bikes_from_van(docking_station)
+    storage_v.each do |bike|
+      docking_station.dock_bike(bike)
+    end
+  end
+
+end
+
+class Garage
+  attr_accessor :storage_g
+  def initialize
+    @storage_g = []
+  end
+
+  def fix(bikes)
+    bikes.each do |bike|
+      bike.status = 'working'
+      storage_g << bike
+    end
+  end
+end
+
 # docking_station = DockingStation.new
 # bike = docking_station.release_bike
 # docking_station.release_bike
